@@ -20,31 +20,31 @@
                 <div class="card mb-4 rounded-0">
                     <div class="card-body">
                         <img src="assets/1708145251278.jpg" class="img-fluid mb-3 w-50" alt="Imagem de Perfil">
-                        <p><strong>Nome:</strong> Nicolas Storti</p>
-                        <p><strong>Idade:</strong> 21 anos</p>
-                        <p><strong>Endereço:</strong> Rua ABC, Fazenda Rio Grande</p>
-                        <p><strong>Biografia:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam pretium felis vel ligula efficitur aliquam.</p>
+                        <p><strong>Nome:</strong></p>
+                        <p><strong>Idade:</strong></p>
+                        <p><strong>Endereço:</strong></p>
+                        <p><strong>Biografia:</strong></p>
                     </div>
                 </div>
             </div>
             <div class="col-md-6">
                 <h2>Atualizar Perfil</h2>
-                <form id="updateForm">
+                <form id="addUserForm" action="/inserir-usuario" method="POST">
                     <div class="mb-3">
                         <label for="nome" class="form-label">Nome</label>
-                        <input type="text" class="form-control rounded-0" id="nome" placeholder="Nome">
+                        <input type="text" class="form-control rounded-0" id="nome" name="nome" placeholder="Nome">
                     </div>
                     <div class="mb-3">
                         <label for="idade" class="form-label">Idade</label>
-                        <input type="text" class="form-control rounded-0" id="idade" placeholder="Idade">
+                        <input type="text" class="form-control rounded-0" id="idade" name="idade" placeholder="Idade">
                     </div>
                     <div class="mb-3">
                         <label for="endereco" class="form-label">Endereço</label>
-                        <input type="text" class="form-control rounded-0" id="endereco" placeholder="Endereço">
+                        <input type="text" class="form-control rounded-0" id="endereco" name="endereco" placeholder="Endereço">
                     </div>
                     <div class="mb-3">
                         <label for="biografia" class="form-label">Biografia</label>
-                        <textarea class="form-control rounded-0" id="biografia" rows="3" placeholder="Biografia"></textarea>
+                        <textarea class="form-control rounded-0" id="biografia" name="biografia" rows="3" placeholder="Biografia"></textarea>
                     </div>
                     <button type="submit" class="btn btn-success rounded-0">Atualizar</button>
                 </form>

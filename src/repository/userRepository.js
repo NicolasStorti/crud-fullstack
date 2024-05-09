@@ -1,48 +1,61 @@
-const mysql = require('./database.js');
+const mysqlConnection = require('./database.js');
 
 async function mapUser(req, res) {
-    mysql().then(db => {
-        db.all('SELECT * FROM user')
-            .then(user => res.json(user));
+    mysqlConnection.query('SELECT * FROM user', (err, rows) => {
+        if (err) {
+            console.error('Erro ao selecionar usuários:', err);
+            res.status(500).json({ error: 'Erro ao selecionar usuários' });
+            return;
+        }
+        res.json(rows);
     });
 }
 
 async function selectUser(req, res) {
     let id = req.body.id;
-    mysql().then(db => {
-        db.get('SELECT * FROM user WHERE id=?', [id])
-            .then(user => res.json(user));
+    mysqlConnection.query('SELECT * FROM user WHERE id=?', [id], (err, rows) => {
+        if (err) {
+            console.error('Erro ao selecionar usuário:', err);
+            res.status(500).json({ error: 'Erro ao selecionar usuário' });
+            return;
+        }
+        res.json(rows[0]);
     });
 }
 
 async function insertUser(req, res) {
     let user = req.body;
-    mysql().then(db => {
-        db.run('INSERT INTO user (nome, idade, endereco, biografia)  VALUES (?, ?, ?, ?)', [user.nome, user.idade, user.endereco, user.biografia]);
-    });
-    res.json({
-        "statusCode": 200
+    mysqlConnection.query('INSERT INTO user (nome, idade, endereco, biografia) VALUES (?, ?, ?, ?)', [user.nome, user.idade, user.endereco, user.biografia], (err, result) => {
+        if (err) {
+            console.error('Erro ao inserir usuário:', err);
+            res.status(500).json({ error: 'Erro ao inserir usuário' });
+            return;
+        }
+        res.json({ statusCode: 200, message: 'Usuário inserido com sucesso' });
     });
 }
 
 async function updateUser(req, res) {
     let user = req.body;
-    mysql().then(db => {
-        db.run('UPDATE user SET nome=?, idade=?, endereco=?, biografia=? WHERE id=?', [user.nome, user.idade, user.endereco, user.biografia, user.id]);
-    });
-    res.json({
-        "statusCode": 200
+    mysqlConnection.query('UPDATE user SET nome=?, idade=?, endereco=?, biografia=? WHERE id=?', [user.nome, user.idade, user.endereco, user.biografia, user.id], (err, result) => {
+        if (err) {
+            console.error('Erro ao atualizar usuário:', err);
+            res.status(500).json({ error: 'Erro ao atualizar usuário' });
+            return;
+        }
+        res.json({ statusCode: 200, message: 'Usuário atualizado com sucesso' });
     });
 }
 
 async function deleteUser(req, res) {
     let id = req.body.id;
-    openDb().then(db => {
-        db.run('DELETE FROM user WHERE id=?', [id])
-            .then(res => res);
-    });
-    res.json({
-        "statusCode": 200
+    mysqlConnection.query('DELETE FROM user WHERE id=?', [id], (err, result) => {
+        if (err) {
+            console.error('Erro ao excluir usuário:', err);
+            res.status(500).json({ error: 'Erro ao excluir usuário' });
+            return;
+        }
+        res.json({ statusCode: 200, message: 'Usuário excluído com sucesso' });
     });
 }
 
