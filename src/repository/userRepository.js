@@ -23,15 +23,15 @@ async function selectUser(req, res) {
     });
 }
 
-async function insertUser(req, res) {
-    let user = req.body;
-    mysqlConnection.query('INSERT INTO user (nome, idade, endereco, biografia) VALUES (?, ?, ?, ?)', [user.nome, user.idade, user.endereco, user.biografia], (err, result) => {
+async function insertUser(nome, idade, endereco, biografia, callback) {
+    mysqlConnection.query('INSERT INTO user (nome, idade, endereco, biografia) VALUES (?, ?, ?, ?)', [nome, idade, endereco, biografia], (err, result) => {
         if (err) {
             console.error('Erro ao inserir usuário:', err);
-            res.status(500).json({ error: 'Erro ao inserir usuário' });
-            return;
+            callback(err, null);
+        } else {
+            callback(null, result.insertId);
         }
-        res.json({ statusCode: 200, message: 'Usuário inserido com sucesso' });
+
     });
 }
 
