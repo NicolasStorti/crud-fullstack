@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const biografia = document.getElementById('biografia').value;
 
         if (!nome || !idade || !endereco || !biografia) {
-            mensagem.innerHTML = '<div class="alert alert-danger" role="alert">Por favor, preencha todos os campos do formulário.</div>';
+            mensagem.innerHTML = '<div class="alert alert-danger rounded-0" role="alert">Por favor, preencha todos os campos do formulário.</div>';
             return;
         }
 
@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             if (response.ok) {
-                mensagem.innerHTML = '<div class="alert alert-success" role="alert">Usuário inserido com sucesso!</div>';
+                mensagem.innerHTML = '<div class="alert alert-success rounded-0" role="alert">Usuário inserido com sucesso!</div>';
                 form.reset();
             } else {
                 throw new Error('Erro ao adicionar usuário');
