@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('addUserForm');
-    
+    const mensagem = document.getElementById('mensagem');
+
     form.addEventListener('submit', async (event) => {
         event.preventDefault();
 
@@ -8,12 +9,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const idade = document.getElementById('idade').value;
         const endereco = document.getElementById('endereco').value;
         const biografia = document.getElementById('biografia').value;
-        
+
         if (!nome || !idade || !endereco || !biografia) {
-            console.error('Por favor, preencha todos os campos do formulário.');
+            mensagem.innerHTML = '<div class="alert alert-danger" role="alert">Por favor, preencha todos os campos do formulário.</div>';
             return;
         }
-        
+
         try {
             const response = await fetch('/inserir-usuario', {
                 method: 'POST',
@@ -22,12 +23,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 },
                 body: JSON.stringify({ nome, idade, endereco, biografia })
             });
-            
-            if (!response.ok) {
+
+            if (response.ok) {
+                mensagem.innerHTML = '<div class="alert alert-success" role="alert">Usuário inserido com sucesso!</div>';
+                form.reset();
+            } else {
                 throw new Error('Erro ao adicionar usuário');
             }
         } catch (error) {
             console.error('Erro:', error.message);
+            mensagem.innerHTML = '<div class="alert alert-danger" role="alert">Erro ao adicionar usuário. Por favor, tente novamente mais tarde.</div>';
         }
     });
 });
